@@ -11,6 +11,14 @@ module.exports = class todoListService {
         return listTasks;
     }
 
+    static async getTaskById(id, next) {
+        const task = await todoListModel.find({_id: id});
+        if (!task) {
+            return next(new AppError('can not get task by id', 401));
+        }
+        return task;
+    }
+
     static async createTask(taskObj, next) {
         const task = await todoListModel.create({
             title: taskObj.title,
@@ -28,7 +36,7 @@ module.exports = class todoListService {
     static async updateStateTask(id, isDone, next) {
         console.log("asfasf" + id)
         console.log(isDone)
-        const task = await todoListModel.findByIdAndUpdate(id,{
+        const task = await todoListModel.findByIdAndUpdate(id, {
             isDone: isDone,
         });
 

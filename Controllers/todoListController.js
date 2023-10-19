@@ -11,6 +11,17 @@ module.exports = class todoList {
         })
     }
 
+    static async getTaskById(req, res, next) {
+
+        const task = await todoListService.getTaskById(req.params.id, next);
+
+        return res.status(200).json({
+            status: "success",
+            data: task,
+            message: "get task by id success"
+        })
+    }
+
     static async createTasks(req, res, next) {
         const taskObj = {
             title: req.body.title,
